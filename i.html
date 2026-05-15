@@ -2,135 +2,681 @@
 <html lang="en">
 <head>
   <link rel="shortcut icon" href="icon.png" />
-<meta charset="UTF-8">
-<title>MetaPath</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  body{background-color:#05070c;color:#63f6f8;font-family:'Share Tech Mono','Courier New',monospace;width:100%;min-height:100vh;overflow-x:hidden}
-  .nav{display:flex;align-items:center;padding:7px 40px;height:56px;position:relative}
-  .nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:#63f6f8;opacity:0.35}
-  .logo img{width:90px;height:90px;object-fit:contain;opacity:.9}
-  .main{display:flex;flex-direction:column;padding:36px 24px 24px 24px;min-height:calc(100vh - 56px);gap:32px}
-  .header{text-align:center;margin-bottom:20px}
-  .header-title{font-size:42px;font-weight:400;line-height:1.2;letter-spacing:0.06em;color:#63f6f8;margin-bottom:12px}
-  .header-title .highlight{color:#63f6f8}
-  .header-subtitle{font-size:14px;color:#63f6f8;font-weight:300;opacity:0.6}
-  .cards-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:20px;width:100%;max-width:1400px;margin:0 auto}
-  .card{background:#0d1117;border-radius:12px;padding:20px;border:1px solid #1a2030;position:relative;overflow:hidden;cursor:pointer;transition:all 0.3s ease;display:flex;flex-direction:column}
-  .card::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:#111520;opacity:0}
-  .card:hover{border-color:#63f6f8;box-shadow:0 0 20px rgba(99, 246, 248, 0.1)}
-  .card-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;position:relative;z-index:1;justify-content:space-between}
-  .card-header-left{display:flex;align-items:center;gap:12px}
-  .card-num{font-size:36px;font-weight:bold;color:#63f6f8;background:#1a1f2e;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid #2a3040;opacity:0.6;flex-shrink:0}
-  .card-label{font-size:14px;color:#63f6f8;font-weight:500}
-  .copy-btn{background:transparent;border:1px solid #63f6f8;color:#63f6f8;width:32px;height:32px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:4px;transition:all 0.3s ease;flex-shrink:0}
-  .copy-btn:hover{border-color:#63f6f8;box-shadow:0 0 12px rgba(99, 246, 248, 0.3);background:rgba(99, 246, 248, 0.1)}
-  .copy-btn:active{transform:scale(0.95)}
-  .copy-btn svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-  .card-image{width:100%;height:330px;object-fit:cover;border-radius:8px;margin-bottom:16px;position:relative;z-index:1}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MetaPath</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Share+Tech+Mono&display=swap');
+    
+    *,*::before,*::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0a0e16;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #63f6f8;
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4dd4d8;
+    }
+
+    body {
+      background: linear-gradient(135deg, #05070c 0%, #0a0e18 100%);
+      color: #63f6f8;
+      font-family: 'Poppins', 'Share Tech Mono', monospace;
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      padding: 7px 150px;
+      height: 56px;
+      position: relative;
+      backdrop-filter: blur(10px);
+      background: rgba(5, 7, 12, 0.7);
+      border-bottom: 1px solid rgba(99, 246, 248, 0.15);
+    }
+
+    .nav::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #63f6f8, transparent);
+      opacity: 0.3;
+    }
+
+    .logo img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      opacity: 0.95;
+      transition: transform 0.3s ease;
+    }
+
+    .logo img:hover {
+      transform: scale(1.05);
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      padding: 36px 24px 24px 24px;
+      flex: 1;
+      gap: 32px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .header-title {
+      font-size: 42px;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: 0.06em;
+      color: #63f6f8;
+      margin-bottom: 12px;
+      text-shadow: 0 0 20px rgba(99, 246, 248, 0.15);
+    }
+
+    .header-subtitle {
+      font-size: 14px;
+      color: #63f6f8;
+      font-weight: 300;
+      opacity: 0.6;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: rgba(13, 17, 23, 0.8);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid rgba(99, 246, 248, 0.15);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(10px);
+      animation: slideIn 0.6s ease forwards;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.3s; }
+    .card:nth-child(4) { animation-delay: 0.4s; }
+    .card:nth-child(5) { animation-delay: 0.5s; }
+    .card:nth-child(6) { animation-delay: 0.6s; }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(99, 246, 248, 0.1) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: #63f6f8;
+      box-shadow: 0 0 30px rgba(99, 246, 248, 0.2), inset 0 0 20px rgba(99, 246, 248, 0.05);
+      transform: translateY(-8px);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+      justify-content: space-between;
+    }
+
+    .card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-num {
+      font-size: 36px;
+      font-weight: 600;
+      color: #63f6f8;
+      background: linear-gradient(135deg, rgba(99, 246, 248, 0.15) 0%, rgba(99, 246, 248, 0.05) 100%);
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      border: 1px solid rgba(99, 246, 248, 0.3);
+      opacity: 0.9;
+      flex-shrink: 0;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .card-label {
+      font-size: 14px;
+      color: #63f6f8;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+
+    .card-description {
+      font-size: 12px;
+      color: #63f6f8;
+      opacity: 0.6;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .copy-btn {
+      background: rgba(99, 246, 248, 0.1);
+      border: 1px solid #63f6f8;
+      color: #63f6f8;
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .copy-btn:hover {
+      border-color: #63f6f8;
+      box-shadow: 0 0 15px rgba(99, 246, 248, 0.4);
+      background: rgba(99, 246, 248, 0.2);
+      transform: scale(1.1);
+    }
+
+    .copy-btn:active {
+      transform: scale(0.95);
+    }
+
+    .copy-btn svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card-image {
+      width: 100%;
+      height: 330px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+      border: 1px solid rgba(99, 246, 248, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-image {
+      transform: scale(1.02);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(99, 246, 248, 0.15);
+      border: 1px solid #63f6f8;
+      color: #63f6f8;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 13px;
+      backdrop-filter: blur(10px);
+      animation: slideInToast 0.3s ease forwards;
+      z-index: 1000;
+    }
+
+    @keyframes slideInToast {
+      from {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(5, 7, 12, 0.8);
+      border-top: 1px solid rgba(99, 246, 248, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 40px 24px 20px;
+      margin-top: auto;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .footer-section h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #63f6f8;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section li {
+      margin-bottom: 10px;
+    }
+
+    .footer-section a {
+      color: #63f6f8;
+      text-decoration: none;
+      font-size: 13px;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      opacity: 1;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(99, 246, 248, 0.15);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-copyright {
+      font-size: 12px;
+      color: #63f6f8;
+      opacity: 0.5;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      font-size: 12px;
+      color: #63f6f8;
+      text-decoration: none;
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      .header-title {
+        font-size: 32px;
+      }
+
+      .card-image {
+        height: 250px;
+      }
+
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        padding: 7px 20px;
+      }
+
+      .logo img {
+        width: 70px;
+        height: 70px;
+      }
+
+      .main {
+        padding: 20px 16px 16px 16px;
+        gap: 24px;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .header-title {
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+
+      .header-subtitle {
+        font-size: 12px;
+      }
+
+      .card {
+        padding: 16px;
+      }
+
+      .card-num {
+        width: 40px;
+        height: 40px;
+        font-size: 28px;
+      }
+
+      .card-label {
+        font-size: 13px;
+      }
+
+      .card-image {
+        height: 200px;
+        margin-bottom: 12px;
+      }
+
+      .copy-btn {
+        width: 32px;
+        height: 32px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .toast {
+        left: 20px;
+        right: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        padding: 7px 15px;
+      }
+
+      .logo img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .main {
+        padding: 15px 12px 12px 12px;
+        gap: 15px;
+      }
+
+      .header-title {
+        font-size: 22px;
+        margin-bottom: 8px;
+      }
+
+      .header-subtitle {
+        font-size: 11px;
+      }
+
+      .card {
+        padding: 12px;
+      }
+
+      .card-header {
+        margin-bottom: 12px;
+      }
+
+      .card-num {
+        width: 36px;
+        height: 36px;
+        font-size: 24px;
+      }
+
+      .card-label {
+        font-size: 12px;
+      }
+
+      .card-image {
+        height: 150px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+      }
+
+      .copy-btn {
+        width: 28px;
+        height: 28px;
+      }
+
+      .footer-content {
+        gap: 15px;
+      }
+
+      .footer-section h3 {
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+
+      .footer-section a {
+        font-size: 12px;
+      }
+
+      .toast {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        font-size: 12px;
+        padding: 10px 16px;
+      }
+    }
+  </style>
 </head>
 <body>
-<nav class="nav">
-  <div class="logo"><img src="logo.png" alt="AutoPath Top logo"/></div>
-</nav>
+  <nav class="nav">
+    <div class="logo"><img src="logo.png" alt="MetaPath logo"/></div>
+  </nav>
 
-<div class="main">
-  <div class="header">
-    <div class="header-title"><span class="highlight"></span>Meta Autonomous Paths</div>
+  <div class="main">
+    <div class="header">
+      <div class="header-title">Meta Autonomous Paths</div>
+    </div>
+
+    <div class="cards-grid">
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-num">1</div>
+            <div>
+              <div class="card-label">Gate & Top</div>
+              <div class="card-description">Basic configuration</div>
+            </div>
+          </div>
+          <button class="copy-btn" title="Copy path code" onclick="copyPathCode(event, 'coral')">
+            <svg viewBox="0 0 24 24"><path d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"/></svg>
+          </button>
+        </div>
+        <img src="card1.png" alt="Gate and Top path" class="card-image"/>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-num">2</div>
+            <div>
+              <div class="card-label">Fully Gated</div>
+              <div class="card-description">Complete gate coverage</div>
+            </div>
+          </div>
+          <button class="copy-btn" title="Copy path code" onclick="copyPathCode(event, 'deep')">
+            <svg viewBox="0 0 24 24"><path d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"/></svg>
+          </button>
+        </div>
+        <img src="card2.png" alt="Fully Gated path" class="card-image"/>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-num">3</div>
+            <div>
+              <div class="card-label">Mixed Strategy</div>
+              <div class="card-description">Balanced approach</div>
+            </div>
+          </div>
+          <button class="copy-btn" title="Copy path code" onclick="copyPathCode(event, 'reef')">
+            <svg viewBox="0 0 24 24"><path d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"/></svg>
+          </button>
+        </div>
+        <img src="card3.png" alt="Mixed Strategy path" class="card-image"/>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-num">4</div>
+            <div>
+              <div class="card-label">Mixed with Opening</div>
+              <div class="card-description">Gate opening variant</div>
+            </div>
+          </div>
+          <button class="copy-btn" title="Copy path code" onclick="copyPathCode(event, 'blue')">
+            <svg viewBox="0 0 24 24"><path d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"/></svg>
+          </button>
+        </div>
+        <img src="card4.png" alt="Mixed with Opening path" class="card-image"/>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-num">5</div>
+            <div>
+              <div class="card-label">Full Gate Opening</div>
+              <div class="card-description">Advanced configuration</div>
+            </div>
+          </div>
+          <button class="copy-btn" title="Copy path code" onclick="copyPathCode(event, 'oceanic')">
+            <svg viewBox="0 0 24 24"><path d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"/></svg>
+          </button>
+        </div>
+        <img src="card5.png" alt="Full Gate Opening path" class="card-image"/>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-num">6</div>
+            <div>
+              <div class="card-label">Gate Top & Opening</div>
+              <div class="card-description">Premium strategy</div>
+            </div>
+          </div>
+          <button class="copy-btn" title="Copy path code" onclick="copyPathCode(event, 'algae')">
+            <svg viewBox="0 0 24 24"><path d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"/></svg>
+          </button>
+        </div>
+        <img src="card6.png" alt="Gate Top and Opening path" class="card-image"/>
+      </div>
+    </div>
   </div>
 
-  <div class="cards-grid">
-    <!-- Card 1 -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-header-left">
-          <div class="card-num">1</div>
-          <div class="card-label">gate and top</div>
-        </div>
-        <button class="copy-btn" title="Copy path" onclick="copyPathCode(event, 'coral')">
-          <svg viewBox="0 0 24 24"><path d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"/></svg>
-        </button>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="https://github.com/siriusftcteam/MetaPath">GitHub</a></li>
+          <li><a href="https://discord.gg/t7kEuj66K">Discord</a></li>
+          <li><a href="https://pedropathing.com/">Pedropathing</a></li>
+        </ul>
       </div>
-      <img src="card1.png" alt="Coral Rush" class="card-image"/>
     </div>
-
-    <!-- Card 2 -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-header-left">
-          <div class="card-num">2</div>
-          <div class="card-label">completely gate</div>
-        </div>
-        <button class="copy-btn" title="Copy path" onclick="copyPathCode(event, 'deep')">
-          <svg viewBox="0 0 24 24"><path d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"/></svg>
-        </button>
-      </div>
-      <img src="card2.png" alt="Deep Clean Sweep" class="card-image"/>
+    <div class="footer-bottom">
+      <div class="footer-copyright">&copy; 2026 MetaPath. All rights reserved.</div>
     </div>
+  </footer>
 
-    <!-- Card 3 -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-header-left">
-          <div class="card-num">3</div>
-          <div class="card-label">mixed</div>
-        </div>
-        <button class="copy-btn" title="Copy path" onclick="copyPathCode(event, 'reef')">
-          <svg viewBox="0 0 24 24"><path d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"/></svg>
-        </button>
-      </div>
-      <img src="card3.png" alt="Reef Explorer" class="card-image"/>
-    </div>
-
-    <!-- Card 4 -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-header-left">
-          <div class="card-num">4</div>
-          <div class="card-label">mixed, gate opening</div>
-        </div>
-        <button class="copy-btn" title="Copy path" onclick="copyPathCode(event, 'blue')">
-          <svg viewBox="0 0 24 24"><path d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"/></svg>
-        </button>
-      </div>
-      <img src="card4.png" alt="Blue Horizon" class="card-image"/>
-    </div>
-
-    <!-- Card 5 -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-header-left">
-          <div class="card-num">5</div>
-          <div class="card-label">completely gate, gate opening</div>
-        </div>
-        <button class="copy-btn" title="Copy path" onclick="copyPathCode(event, 'oceanic')">
-          <svg viewBox="0 0 24 24"><path d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"/></svg>
-        </button>
-      </div>
-      <img src="card5.png" alt="Oceanic Loop" class="card-image"/>
-    </div>
-
-    <!-- Card 6 -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-header-left">
-          <div class="card-num">6</div>
-          <div class="card-label">gate, top and opening</div>
-        </div>
-        <button class="copy-btn" title="Copy path" onclick="copyPathCode(event, 'algae')">
-          <svg viewBox="0 0 24 24"><path d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"/></svg>
-        </button>
-      </div>
-      <img src="card6.png" alt="Algae Accelerator" class="card-image"/>
-    </div>
-  </div>
-</div>
-
-<script>
-const pathCodeLibrary = {
-  coral: `public static class Paths {
+  <script>
+    const pathCodeLibrary = {
+      coral: `public static class Paths {
     public PathChain Path1;
     public PathChain Path2;
     public PathChain Path3;
@@ -263,7 +809,7 @@ const pathCodeLibrary = {
           .build();
     }
   }`,
-  deep: `public static class Paths {
+      deep: `public static class Paths {
     public PathChain Path1;
     public PathChain Path2;
     public PathChain Path3;
@@ -397,7 +943,7 @@ const pathCodeLibrary = {
           .build();
     }
   }`,
-  reef: `public static class Paths {
+      reef: `public static class Paths {
     public PathChain Path1;
     public PathChain Path2;
     public PathChain Path3;
@@ -527,7 +1073,7 @@ const pathCodeLibrary = {
           .build();
     }
   }`,
-  blue: `public static class Paths {
+      blue: `public static class Paths {
     public PathChain Path1;
     public PathChain Path2;
     public PathChain Path3;
@@ -658,7 +1204,7 @@ const pathCodeLibrary = {
           .build();
     }
   }`,
-  oceanic: `public static class Paths {
+      oceanic: `public static class Paths {
     public PathChain Path1;
     public PathChain Path2;
     public PathChain Path3;
@@ -804,7 +1350,7 @@ const pathCodeLibrary = {
           .build();
     }
   }`,
-  algae: `public static class Paths {
+      algae: `public static class Paths {
     public PathChain Path1;
     public PathChain Path2;
     public PathChain Path3;
@@ -936,38 +1482,35 @@ const pathCodeLibrary = {
           .build();
     }
   }`
-};
+    };
 
-function copyPathCode(event, pathName) {
-  event.stopPropagation();
-  const button = event.target.closest('.copy-btn');
-  const pathCode = pathCodeLibrary[pathName];
-  
-  if (pathCode) {
-    navigator.clipboard.writeText(pathCode).then(() => {
-      button.style.background = 'rgba(99, 246, 248, 0.2)';
+    function copyPathCode(event, pathName) {
+      event.stopPropagation();
+      const button = event.target.closest('.copy-btn');
+      const pathCode = pathCodeLibrary[pathName];
+      
+      if (pathCode) {
+        navigator.clipboard.writeText(pathCode).then(() => {
+          showToast('Path code copied to clipboard!');
+          button.style.background = 'rgba(99, 246, 248, 0.3)';
+          setTimeout(() => {
+            button.style.background = 'rgba(99, 246, 248, 0.1)';
+          }, 1500);
+        });
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
       setTimeout(() => {
-        button.style.background = 'transparent';
-      }, 1500);
-    });
-  }
-}
-
-function copyPath(event) {
-  event.stopPropagation();
-  const button = event.target.closest('.copy-btn');
-  const card = button.closest('.card');
-  const label = card.querySelector('.card-label').textContent;
-  const num = card.querySelector('.card-num').textContent;
-  const pathText = `${num} ${label}`;
-  
-  navigator.clipboard.writeText(pathText).then(() => {
-    button.style.background = 'rgba(99, 246, 248, 0.2)';
-    setTimeout(() => {
-      button.style.background = 'transparent';
-    }, 1500);
-  });
-}
-</script>
+        toast.style.animation = 'slideInToast 0.3s ease reverse';
+        setTimeout(() => toast.remove(), 300);
+      }, 2500);
+    }
+  </script>
 </body>
 </html>
